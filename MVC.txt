@@ -1,0 +1,1415 @@
+MVC:
+
+1. What is MVC & what are its advantages ?
+    
+2. Explain MVC application life cycle ?
+
+3. What are Filters in MVC & explain the different filters available in MVC ?
+
+4. How to create custom filters in MVC ?
+
+5. What is the difference between TempData, ViewData, and ViewBag ?
+
+6. What is a View Engine ?
+
+7. What are HTML helpers in MVC ?
+
+8. How to create custom HTML helpers ?
+
+9. What is Dependency Resolution in MVC ?
+
+10. What is the AntiForgeryToken ?
+
+11. How can we use multiple models with a single view ?
+a. Dynamic model
+b. ViewModel
+c. ViewData
+d. ViewBag
+e. Using Tuple
+f. Using Render Action Method
+
+12. How can you create a Scaffold template in MVC ?
+
+13. Can you remove default View Engine in ASP.NET MVC? How ?
+You can control it from the Global.asax file by taking advantage of ViewEngines.Engines.Clear().
+protected void Application_Start()
+{
+    ViewEngines.Engines.Clear();
+    ViewEngines.Engines.Add(new RazorViewEngine());
+    AreaRegistration.RegisterAllAreas();
+    WebApiConfig.Register(GlobalConfiguration.Configuration);
+    FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+    RouteConfig.RegisterRoutes(RouteTable.Routes);
+    BundleConfig.RegisterBundles(BundleTable.Bundles);
+    AuthConfig.RegisterAuth();
+}
+
+14. Can we add constraints to the route? If yes, explain how we can do it ?
+
+15. What is the use of web API? Why Web API needed, if you have already RESTful services using WCF?
+Web API is an application programming interface (API) that is used to enable the communication 
+or interaction with software components with each other. ASP.NET Web API is a framework that 
+makes it easy to build HTTP Service that reaches a broad range of clients, including browsers 
+and mobile devices.
+
+16. What is Allowanonymous ?
+    One of the new features in ASP.NET MVC 4 is the AllowAnonymous Attribute that helps you secure 
+an entire ASP.NET MVC 4 Website or Controller while providing a convenient means of allowing 
+anonymous users access to certain controller actions, like the login and register Actions.
+
+Global Filters to secure the entire website as opposed to using the Authorize Attribute on a 
+controller-by-controller basis. Alter the RegisterGlobalFilters Method in Global.asax to add
+an Authorize Attribute to the entire ASP.NET MVC 4 Website.
+
+RegisterGlobalFilters(GlobalFilterCollection filters) {
+  filters.Add(new HandleErrorAttribute());
+  filters.Add(new System.Web.Mvc.AuthorizeAttribute());
+}
+
+17. Difference between First and FirstOrDefault ?
+First() - if null values are there, it throws an exception and also there is No elements 
+          present in a table.
+FirstOrDefault() - It will not through any exception if nulls are also present.
+
+18. Logger Exception where Exceptions are stored ?
+
+
+19. Bundle and Minification in MVC ?
+   Bundling is all about compressing several JavaScript or stylesheets files without any formatting
+(also referred as minified) into a single file for saving bandwith and number of requests to load 
+a page.
+
+As example you could create your own bundle:
+
+bundles.Add(New ScriptBundle("~/bundles/mybundle").Include(
+            "~/Resources/Core/Javascripts/jquery-1.7.1.min.js",
+            "~/Resources/Core/Javascripts/jquery-ui-1.8.16.min.js"))
+
+@Scripts.Render("~/bundles/mybundle")
+One more advantage of @Scripts.Render("~/bundles/mybundle") over the native 
+<script src="~/bundles/mybundle" /> is that @Scripts.Render() will respect the web.config 
+debug setting:
+
+<system.web>
+<compilation debug="true/false" />
+If debug="true" then it will instead render individual script tags for each source script, 
+without any minification.
+
+For stylesheets you will have to use a StyleBundle and @Styles.Render()
+
+Instead of loading each script or style with a single request (with script or link tags), 
+all files are compressed into a single JavaScript or stylesheet file and loaded together.
+
+20. Ajax call usage in Jquery ?
+
+21. Filters and types in MVC ?
+
+
+SQL Server:
+
+1. How to remove duplicate rows from table using a single query (remove duplicates without 
+distinct) ?
+
+a) Remove Duplicates using Group by
+Select FirstName, LastName, MobileNo, Count(*) as CNT
+from  Customer Group By FirstName, LastName, MobileNo, Having Count(*) = 1;
+
+2. How to pass a datatable as a parameter to a stored procedure ?
+
+3. How to get number of Weekends of current month ?
+
+4. Write an SQL Query to find the second highest salary of a group of employees.
+Select Ename, MAX(sal) from Emp where MAX(sal)< (Select MAX(sal) from emp) Emp
+
+3rd highest sal:
+Select MIN(SAL) from(Select distinct top 3 sal from emp order by sal desc)as a
+5. What is SQL Profiler ?
+
+6. Write an SQL Query to find maximum salary in each department of an organization.
+Select Dept, Max(Sal) from Emp group by Dept;
+
+7. Write an SQL Query to check whether date passed to Query is in the specified format.
+
+8. What does UNION do? What is the difference between UNION and UNION ALL ?
+Union - It will sort only matched records(unique records) in both the tables.
+UnionAll - It will just combine both the tables and give all records after sorting.
+
+9. There are 2 tables, Employee (All employee details are stored in this table) & 
+EmployeeSalary (Salary given to each employee in each month is stored in this table). 
+Write a query to fetch average salary given to each employee in the current year.
+
+10. How to increase the speed of a stored procedure ?
+
+
+Entity Framework & LINQ :
+
+1. What is entity framework ?
+
+2. Explain Lazy loading, Eager Loading, and Explicit Loading ?
+
+3. Explain what is connected and dis-connected data access in ADO.NET ?
+
+4. Can we access a model in Entity Framework without primary key defined ?
+   Yes
+
+5. Can we do an insertion and deletion at the same block of code and then Apply save changes 
+   to them in a statement in Entity Framework ?
+
+6. What is the difference between ObjectContext and DbContext ?
+a) ObjectContext supports Compiled Queries. 
+   DbContext does not support Compiled Queries.
+
+b) ObjectContext supports self-tracking of Entities.
+   DbContext does not support self-tracking of Entities.
+
+c) ObjectContext is only useful in Model First and Database First approaches.
+   DbContext is useful in Model First, Database First approach as well as Code First approach.
+
+d) ObjectContext can be used by Entity Framework 4.0 and below.
+   DBContext can be used by Entity Framework 4.1 and above.
+
+7. Explain what is LINQ ? Why is it required ?
+LINQ enables us to work with these different data sources using a similar coding style without
+having the need to know the syntax specific to the data source.
+
+8. Explain what is the difference between Statement Lambda and Expression Lambda ?
+
+9. Explain the Use of let and into keywords, and how they help in making Progressive queries
+   but still keep deferred execution ?
+
+10. For example there are 2 lists, one is a list of users & another is a list of emails.
+Write a query to fetch only those list of users whose email is not present in the second list,
+using both LINQ as well as Lambda Expressions ?
+
+
+JavaScript & JQuery:
+
+1. What is event delegation ?
+
+2. What is the significance of, and reason for, wrapping the entire content of a JavaScript 
+source file in a function block ?
+
+3. What is NaN? What is its type? How can you reliably test if a value is equal to NaN ?
+* isNaN() ? Stands for ?is Not a Number?, if variable is not a number, it return true, else 
+return false.
+<script type="text/javascript">
+var num1 = 100;
+
+if(isNaN(num1))
+{
+   document.write(num1 + " is not a number <br/>");
+}
+else
+{
+   document.write(num1 + " is a number <br/>");
+}
+var str1 = "SriRam";
+if(isNaN(str1))
+{
+  document.write(str1 + " is not a number <br/>");
+}
+else
+{
+  document.write(str1 + " is a number <br/>");
+}
+</script>
+
+** typeof ? If variable is a number, it will returns a string named ? number ?
+
+<script type="text/javascript">
+var num1 = 100;
+if(typeof num1 == 'number')
+{
+  document.write(num1 + " is a number <br/>");
+}
+else
+{
+  document.write(num1 + " is not a number <br/>");
+}
+</script>
+
+4. What are the differences between null and undefined & between == and === ?
+
+5. Why is ?self? needed instead of ?this? in JavaScript ?
+
+6. Given the following HTML:
+
+ <div id="expander"></div>
+
+And the following CSS:
+
+div#expander{
+width: 100px;
+height: 100px;
+background-color: blue;}
+
+Write code in jQuery to animate the #expander div, expanding it from 100 x 100 pixels to 
+200 x 200 pixels over the course of three seconds.
+
+7. What is method chaining in jQuery? Provide an example. What advantages does it offer ?
+
+8. Which of the two lines of code below is more efficient? Explain your answer.
+
+document.getElementById("logo");
+or
+$("#logo");
+
+9. Explain and contrast the usage of event.preventDefault() and event.stopPropagation(). 
+Provide an example.
+
+10. Explain the .promise() method in jQuery, including how and why it would be used.
+
+11. What?s the difference between document.ready() and window.onload() ?
+
+12. What is main advantage of loading jQuery library using CDN ?
+
+13. How JavaScript and jQuery are different ?
+
+14. Can we have multiple document.ready() function on the same page ?
+    No
+
+15. What is a prototype ?
+
+
+=========================================================================================
+1. Custom Action Filters ?
+
+Now, you are going to create a Custom Action Filter which implements the pre-processing and 
+post-processing logic. It will inherit from ActionFilterAttribute class and also implement 
+IActionFilter interface.
+
+ActionFilterAttribute contains four important methods as in the following.
+OnActionExecuting: It is called just before the action method is going to call.
+OnActionExecuted: It is called just after the action method is called.
+OnResultExecuting: It is called just before the result is executed; it means before rendering 
+the view.
+OnResultExecuted: It is called just after the result is executed, it means after rendering 
+the view.
+
+2. How can we use multiple models with a single view ?
+
+ExpandoObject (the System.Dynamic namespace) is a class that was added to the .Net Framework 4.0
+that allows us to dynamically add and remove properties onto an object at runtime. 
+Using this ExpandoObject, we can create a new object and can add our list of teachers and 
+students into it as a property. We can pass this dynamically created object to the view and 
+render list of the teacher and student.
+
+public class HomeController : Controller  
+{  
+    public ActionResult Index()  
+    {  
+        ViewBag.Message = "Welcome to my demo!";  
+        dynamic mymodel = new ExpandoObject();  
+        mymodel.Teachers = GetTeachers();  
+        mymodel.Students = GetStudents();  
+        return View(mymodel);  
+    }  
+}  
+
+3. Can you remove default View Engine in ASP.NET MVC ? How ?
+
+If you are not using any view engine like ASPX View Engine, it is better to remove it to 
+improve the performance, it is one of the many MVC performance tuning tips.
+You might be wondering how it will improve the performance. Let's prove it by creating a new
+action method in a Home Controller, don't add a view for this action method now.
+Now, run the application and try navigating to "http://localhost:1212/Home/Foo". 
+Here is what I received:
+
+public ActionResult Foo()
+{
+     return View();
+}
+You can control it from the Global.asax file by taking advantage of ViewEngines.Engines.Clear().
+
+protected void Application_Start()
+ {
+    ViewEngines.Engines.Clear();
+    ViewEngines.Engines.Add(new RazorViewEngine());
+    AreaRegistration.RegisterAllAreas();
+    WebApiConfig.Register(GlobalConfiguration.Configuration);
+    FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+    RouteConfig.RegisterRoutes(RouteTable.Routes);
+    BundleConfig.RegisterBundles(BundleTable.Bundles);
+    AuthConfig.RegisterAuth();
+  }
+
+4. What is Dependency Resolution in MVC ?
+
+MVC 3 introduced a new concept called a "Dependency Resolver", which greatly simplified the 
+use of dependency injection in your applications.
+
+This made it easier to decouple application components,making them more configurable and 
+easier to test.
+Support was added for the following scenarios:
+ Controllers (registering and injecting controller factories, injecting controllers)
+ Views (registering and injecting view engines, injecting dependencies into view pages)
+ Action filters (locating and injecting filters)
+ Model binders (registering and injecting)
+ Model validation providers (registering and injecting)
+ Model metadata providers (registering and injecting)
+ Value providers (registering and injecting)
+
+5. What is the AntiForgeryToken ?
+
+6. How can you create a Scaffold template in MVC ?
+
+
+ViewData
+ViewData is used to pass data from controller to view.
+It is derived from ViewDataDictionary class.
+It is available for the current request only.
+Requires typecasting for complex data type and checks for null values to avoid error.
+If redirection occurs, then its value becomes null.
+
+ViewBag
+ViewBag is also used to pass data from the controller to the respective view.
+ViewBag is a dynamic property that takes advantage of the new dynamic features in C# 4.0.
+It is also available for the current request only.
+If redirection occurs, then its value becomes null.
+Doesn?t require typecasting for complex data type.
+ViewBag is slower than ViewData.
+
+TempData
+TempData is derived from TempDataDictionary class.
+TempData is used to pass data from the current request to the next request.
+It keeps the information for the time of an HTTP Request. This means only from one page 
+to another. It helps to maintain the data when we move from one controller to another 
+controller or from one action to another action
+It requires typecasting for complex data type and checks for null values to avoid error. 
+Generally, it is used to store only one time messages like the error messages and 
+validation messages.
+
+TempData is useful when you want to transfer non-sensitive data from one action method
+to another action method of the same or a different controller as well as redirects.
+
+Example :
+
+public ActionResult Index()
+{
+        TempData["name"] = "Test data";
+        TempData["age"] = 30;
+        return View();
+}
+
+public ActionResult About()
+{
+        string userName;
+        int userAge;
+        
+        if(TempData.ContainsKey("name"))
+            userName = TempData["name"].ToString();
+    
+        if(TempData.ContainsKey("age"))
+            userAge = int.Parse(TempData["age"].ToString());
+       return View();
+}
+
+
+Abstract class
+Abstract class is a special type of class which cannot be instantiated and acts as a base 
+class for other classes. Abstract class members marked as abstract must be implemented by 
+derived classes.
+
+The purpose of an abstract class is to provide basic or default functionality as well as 
+common functionality that multiple derived classes can share and override.
+
+6. Httphandler where we define ?
+An ASP.NET HTTP handler is a process that runs in response to a request made to an ASP.NET 
+Web application.
+HTTP Module
+A HTTP module is an assembly that is called on every request that is made to your application. 
+HTTP modules are called as part of the ASP.NET request pipeline and have access to life-cycle 
+events throughout the request.
+
+
+1. View state and session diff
+2. Use of sessions
+ASP.NET session state enables you to store and retrieve values for a user as the user 
+navigates ASP.NET pages in a Web application. HTTP is a stateless protocol. This means that
+a Web server treats each HTTP request for a page as an independent request.
+
+3. View state values where its stored ?
+Viewstate is stored on page it self in encoded form. You can't access the viewstate in 
+client side in a direct manner. You need to know the encoding/decoding algorithms to 
+fetch the valuable data from this viewstate in clientside code.
+
+4. Tablur values functions can use inside sp in sql ?
+
+5. default time, and where sessions are stored ?
+The session is stored on the server and a cookie is stored in the user's browser with 
+a token to know which server-side session belongs to which user.
+Dafualt time for Session: 20 mins
+Dafault time for Cookie: 30 mins
+
+Lazy Loading  -   The dependent/related entities are loaded once they are accessed for 
+the first time.
+Eager Loading -  The dependent/related entities at once (Ex: Student s = dbContext. 
+Students.Include(s => s. Courses).FirstOrDefault(s => s. StudentId == sId);)
+Explicit Loading - By default Entity Framework supports Lazy loading, but we can disable 
+the Lazy loading and we can still load the dependent/related entities by calling ?Load? method.
+
+6. Authentication types in .net ?
+
+Windows Authentication
+Forms Authentication
+Passport Authentication
+
+7. Serialization:                                                         
+
+XML Serialization:
+
+Object Serialization is a process through which an object's state is transformed into some 
+serial data format, such as XML or binary format, in order to be stored for some later use. 
+In other words, the object is "dehydrated" and put away until we need to use it again.
+
+Some good uses for serialization/deserialization include: 
+
+Storing user preferences in an object.
+Maintaining security information across pages and applications.
+Modification of XML documents without using the DOM.
+Passing an object from on application to another.
+Passing an object from one domain to another.
+Passing an object through a firewall as an XML string. 
+XML Serialization: It is limited that it can serialize only public members.
+
+Required Namespace :         
+
+using System.Xml;
+using System.Xml.Serialization;
+
+8. Diff. between TextBox and TextBoxFor in MVC
+
+@Html.TextBox("Name")
+Html.TextBoxFor(m => m.Name)
+will both produce
+
+<input id="Name" name="Name" type="text" />
+
+The typed TextBoxFor will generate your input names for you. This is usually just 
+the property name but for properties of complex types can include an underscore 
+such as 'customer_name' Using the typed TextBoxFor version will allow you to use 
+compile time checking. So if you change your model then you can check whether there 
+are any errors in your views.
+
+The main benefit of the newer strongly typed extensions is to show any errors / 
+warnings at compile-time rather than runtime. And Textbox is not strongly typed.
+
+9. What is the use of View Model in ASP.Net MVC ?
+View Model is a plain class with properties, which is used to bind it to strongly typed view.
+View Model can have the validation rules defined for its properties using data annotations.
+
+
+HydComBala:
+
+1. ID vs class selector which is faster ?
+Id is faster because it is unique through out the page.
+
+2. Selectors in jquery 
+Selector	      Example	          Selects
+*	      $("*")		         All elements
+#id	      $("#lastname")	         The element with id="lastname"
+.class	      $(".intro")	         All elements with class="intro"
+.class        $(".intro,.demo")          All elements with the class "intro" or "demo"
+element	      $("p")	                 All <p> elements
+el1,el2,el3   $("h1,div,p")         	 All <h1>, <div> and <p> elements
+:button	      $(":button")	         All input elements with type="button"
+:image	      $(":image")	         All input elements with type="image"
+:file	      $(":file")	         All input elements with type="file"
+:enabled      $(":enabled")	         All enabled input elements
+:disabled     $(":disabled")	         All disabled input elements
+:selected     $(":selected")	         All selected input elements
+:checked      $(":checked")	         All checked input elements
+
+3. Chaining in jquery ?
+Here is a technique called chaining, that allows us to run multiple jQuery commands, one after the other, on the same element(s).
+Ex :  $("#p1").css("color", "red").slideUp(2000).slideDown(2000); 
+
+4. Redirectresult in mvc exception handle ?
+
+5.  How to call controller method in javascript  ?
+$.ajax({
+type: "POST",
+url: '@Url.Action("ActionName", "Controller")',
+data: GetAllFilterData_Mobile(),
+dataType: 'json',
+contentType: 'application/json; charset=utf-8',
+success: function (Data) { }
+Error: { }
+})
+
+6. Types of actions in MVC ? or return types in mvc ?
+a. ViewResult
+b. Empty Result
+c. Redirect Result
+d. JavaScriptResult
+e. JsonResult
+f. ContentResult
+g. FileContentResult
+h. FileStreamResult
+i. FilePathResult
+
+7. Filters in MVC ?
+a. Authentication Filters
+b. Action Filters
+c. Exception Filters
+d. Result Filters
+
+8. Interface and abstract class in c#
+
+9. CompileTime and Runtime polymorphism in c# ?
+ OverLoading
+ OverRiding
+
+10. Garbage collector phases c#  ?
+
+11. Reflections in c# ?
+    Reflection in C# is used to retrieve metadata on types at runtime. In other words,
+ you can use reflection to inspect metadata of the types in your program dynamically 
+-- you can retrieve information on the loaded assemblies and the types defined in them.
+
+12. Connected and Disconnected Architecture diff ?
+
+13. Diff. between DataSet and DataReader ?
+Dataset - Disconnected Architecture
+              Collection of multiple tables
+              Costiler than DataReader
+DataReader - Connected Architecture
+	     ReadOnly and forward only (can traverse the data in forward only)
+	       
+14. Difference between Session and Cache in c# ?
+The first main difference between session and caching is: a session is per-user based 
+but caching is not per-user based, So what does that mean? Session data is stored at 
+the user level but caching data is stored at the application level and shared by all 
+the users. It means that it is simply session data that will be different for the 
+various users for all the various users, session memory will be allocated differently 
+on the server but for the caching only one memory will be allocated on the server and 
+if one user modifies the data of the cache for all, the user data will be modified.
+
+15. ASP.net page life cycle ?
+
+16. Httphandler where we define ?
+An ASP.NET HTTP handler is a process that runs in response to a request made to an 
+ASP.NET Web application.
+HTTP Module
+A HTTP module is an assembly that is called on every request that is made to your 
+application. HTTP modules are called as part of the ASP.NET request pipeline and 
+have access to life-cycle events throughout the request.
+
+
+17. Polymorphism(both having same return type - will it work ?) OOPS C#
+    No
+
+18. Can we create an object for interface ? if not how we can handle ?
+    Actually you cannot create an instance of an interface. You create an instance of 
+some class, implementing the interface. Actually there can be dozens of classes, 
+implementing one interface.
+
+======================================================================================
+
+MouriTech
+
+1. Diff. bn Dataset and DataAdapter
+2. ConnectionPooling
+3. ADO.net advantages
+4. LayOuts in MVC
+5. Alias name in MVC
+6. MultiLanguage / Globalization in c#  and which namespace used ?
+7. How to make multiple languages in C#
+8. how to Invalidate the Session in asp.net ?
+9. how to discard the session ?
+10. Session and application and Cache and Cookie diff.
+11. cilent side validation and server side validation diff.
+12. Validatiors in asp.net
+13. Postback in c# and ViewState in c#
+14. Regular expression validator in c#
+15. Constuctor in c#
+16. Usage of "new" keyword in c#
+17. usage of "Object" in c#
+18. OOPs concepts in C#
+19. diff. bn Interface and Abstract class in C#
+20. Bundling and minification in C#
+
+================================================================================
+https://gradeup.co/tet/kvs-exams
+https://www.indgovtjobs.in/2016/07/DRDO-RAC-Recruitment.html
+https://www.indgovtjobs.in/2015/10/Government-Jobs.html
+https://www.tcyonline.com/latest-government-jobs
+
+=================================
+
+Types of Filters in MVC ?
+1. Action Filters
+2. Autherization Filters
+3. Result Filters
+4. Exception Filters
+
+
+Can I use "Put" method in html form to send data from HTML form to server? Yes 
+
+The purpose of an abstract class is to define some common behavior that can be inherited 
+by multiple subclasses, without implementing the entire class.
+
+===================================================================================
+
+Segro Soft
+
+1. Selectors in Jquery
+
+2. window.load and document.ready diff ?
+The $(document).ready() is a jQuery event which occurs when the HTML document has been fully 
+loaded, while the window.onload event occurs later, when everything including images on the 
+page loaded. Also window.onload is a pure javascript event in the DOM, while the $(document).
+ready() event is a method in jQuery.
+$(window).load event is fired after whole content (including css, images etc..) is loaded.
+
+3. Date how to define in C# ?
+4. Interface usage in c# ?
+5. Abstract and interface diff ?
+
+6. layout in mvc ? do u have multiple layouts in mvc ? Yes/No
+    if Yes - different layouts can be used to same .cshtml page ?
+Method 1 : Control Layouts rendering by using _ViewStart file in the root directory of the 
+Views folder.
+@{
+var controller = HttpContext.Current.Request.RequestContext.RouteData.
+Values["Controller"].ToString();
+
+string cLayout = "";
+ if (controller == "Webmaster") {
+ cLayout = "~/Views/Shared/_WebmasterLayout.cshtml";
+ }
+ else {
+ cLayout = "~/Views/Shared/_Layout.cshtml";
+ }
+ Layout = cLayout;
+}
+
+Method 2 : Set Layout by Returning from ActionResult
+public ActionResult Index()
+{
+ SampleModel model = new SampleModel();
+ //Any Logic
+ return View("Index", "_WebmasterLayout", model);
+}
+
+Method 3 : View - wise Layout (By defining Layout within each view on the top)
+@{
+ Layout = "~/Views/Shared/_WebmasterLayout.cshtml";
+}
+
+Method 4 : Placing _ViewStart file in each of the directories
+
+
+7. How to validate fields in mvc ?
+8. Result types in mvc ?
+9. Action results in mvc ?
+10. Minification and Bundling ? usage ?
+
+======================================================================================
+
+1. Polymorphism(both having same return type - will it work ?) OOPS C#
+   No
+2. second highest value LINQ query
+3. name starts or ends with "R" LINQ query
+4. how to close a ado.net connection without finally block if catch block got the exception
+5. indexes in SQL - purpose
+6. abstract class vs interfaces
+
+7. In AJAX call how to know the where the error is ? [Ans. Error function]
+Essentially, ajax call serves as a bridge between database and server without requiring the 
+user to refresh the page. It is a better way to create faster, more responsive, and better 
+web-based applications using HTML, Java Script, XML or JSON, and CSS. 
+
+United Health Care
+1. Javascript/JQuery array - how to define ?
+2. Int/String List how to use c# ?
+3. List of all values from the method how we wil get ? List<datatype>
+4. How to get second highest value from the 3 tables after combining ?
+
+Simpro
+1. Abstract class specialty, diff. bn Abstract and normal classes
+2. diff. bn Virtual, Override and Abstract
+3. aabbcabccaab  - occurance of each character in the given string ?
+
+public class Program
+  {
+       public static void Main(string[] args)
+        {
+            string input = "csharpstar";
+            while (input.Length > 0)
+            {
+                Console.Write(input[0] + " : ");
+                int count = 0;
+                for (int j = 0; j < input.Length; j++)
+                 {
+                    if (input[0] == input[j])
+                    {
+                        count++;
+                    }
+                }
+                Console.WriteLine(count);
+                input = input.Replace(input[0].ToString(), string.Empty);
+            }
+            Console.ReadLine();
+        }
+ }
+
+4. How to enable Routing in MVC
+5. Lazy Loading
+
+6. Httphandler where we define ?
+An ASP.NET HTTP handler is a process that runs in response to a request made to an ASP.NET Web 
+application.
+HTTP Module
+A HTTP module is an assembly that is called on every request that is made to your application. HTTP modules are called as part of the ASP.NET request pipeline and have access to life-cycle events throughout the request.
+
+7. Can we use Update query in function SQL ?
+8. CTE means - SQL
+9. Dispose and Finalise in C#
+10. Uinon and Union all diff in SQL
+11. Viewstate in .net
+12. Get and Post methods in .net
+13. Filters in MVC
+
+Caliber Hyd
+
+1. View state and session diff.
+2. Use of sessions
+ASP.NET session state enables you to store and retrieve values for a user as the user 
+navigates ASP.NET pages in a Web application. HTTP is a stateless protocol. This means that 
+a Web server treats each HTTP request for a page as an independent request.
+
+3. View state values where its stored ?
+Viewstate is stored on page it self in encoded form. You can't access the viewstate in client 
+side in a direct manner. You need to know the encoding/decoding algorithms to fetch the 
+valuable data from this viewstate in clientside code.
+
+4. Tablur values functions can use inside sp in sql ?
+
+5. default time, and where sessions are stored ?
+The session is stored on the server and a cookie is stored in the user's browser with a token 
+to know which server-side session belongs to which user.
+Dafualt time for Session: 20 mins
+Dafault time for Cookie: 30 mins
+
+6. Inproc, OutProc, Sql server sessions ?
+
+sreejobs.com                       
+IQVIA           
+               
+Nalasha(INetrics)
+1. Does MVC supports PostBack ? If not how it will handle ?
+2. Asyncronous Post and normal Postback diff.
+3. Diff. between DataSet and Data Adapter
+
+Scheema Technologies
+1. Diff. between == and ===
+2. Abstract class ?
+3. Can we create an object for interface ? if not how we can handle ?
+Actually you cannot create an instance of an interface. You create an instance of some class, implementing the interface. Actually there can be dozens of classes, implementing one interface.
+
+4. Class and interfaces how they can communicate ?
+5. diff. between Javascript and JSON objects ?
+6. How we can send data from the view to controller ? 
+7. LINQ query ?
+
+* MVC framework automatically converts a query string to the action method parameters.
+
+Conduent
+1. Encapsulation
+2. Polymorphism (RunTime and CompileTime)
+3. Abstract and Interface
+4. Constant and ReadOnly
+5. TempData, ViewData and ViewBag
+6. Minification and Bundling in MVC
+7. Faster retrival of data if million of records are there in SQL (Techniques)
+8. difference between window load and document ready functions in jQuery
+
+Lazy Loading  -   The dependent/related entities are loaded once they are accessed for the first time.
+Eager Loading -  The dependent/related entities at once (Ex: Student s = dbContext. Students.Include(s => s. Courses).FirstOrDefault(s => s. StudentId == sId);)
+Explicit Loading - By default Entity Framework supports Lazy loading, but we can disable the Lazy loading and we can still load the dependent/related entities by calling ?Load? method.
+
+====================================================================================
+1. Explain the page life cycle of MVC
+
+Page life cycle execution steps :
+web Request (request from the server)
+Routing (rroute tables have the information of all registered routes)
+Conttoller initialisation (which controles the method(which method mentioned in the route table))
+Action execution (a return type of a controller method)
+Result execution 
+View engine (It will show the data to the user/UI)
+Result execution ()
+UI Response ()
+
+2.  explain Attribute Routing in MVC
+
+Attribute routing uses attributes to define routes. Attribute routing gives you more control 
+over the URLs to the web application. 
+Ex :[Route("products/{id?}")]  
+      public ActionResult Details(string id)  { }
+in the above code "id" is attribute (which will directly pass to the route table)
+
+3. explain Dependency Resolution in MVC
+
+Dependency Injection. DI is a software design pattern that allow us to develop loosely 
+coupled code.
+
+4. explain AJAX Helpers in MVC
+
+Ajax Helpers: The main purpose of AJAX Helpers are used to create AJAX enabled forms and 
+links which performs request to server.
+Ex: 
+$.ajax({
+type: "POST",
+url: '@Url.Action("ActionMethod", "ControllerName")',
+data: ,
+dataType: 'json',
+contentType: '',
+success: function () { }
+failure:
+});
+
+5. Difference Html.Partial  VS Html.RenderPartial
+
+Html.Partial returns a String. Html.RenderPartial returns void.
+
+6. Can a view be shared across multiple controllers? If Yes, How we can do that ? 
+Yes, It is possible to share a view across multiple controllers by putting a view into the 
+shared folder. But while doing this, we need to automatically make the view available 
+across multiple controllers.
+
+7. What is the difference between asynchronous and synchronous actions? 
+When would you use asynchronous actions ?
+
+8. How can we do exception handling in MVC ? 
+Using the following methods:
+Try-catch-finally
+Overriding OnException method
+Using the [HandleError] attribute on actions and controllers
+Setting a global exception handling filter
+Handling Application_Error event
+
+9. How can we use two (multiple) models with a single view ?
+There are many ways of using multiple models in a view, 
+ViewData,
+ViewBag,
+PartialView,
+TempData,
+ViewMode,
+
+10. How can we detect that a MVC controller is called by POST or GET ?
+we can do the code like below and detect like this:
+
+Public ActionResult Rudra()
+{
+   if (Request.HttpMethod == "POST")
+    {
+      return View("Index");
+    }
+   else
+    {
+      return View("Index");
+    }
+ }
+ 
+11.  What is the difference between Action Result and View Result ?
+"ActionResult" is an abstract class while "ViewResult" derives from "ActionResult" class. 
+"ActionResult" has many derived classes like "ViewResult" ,"JsonResult" , "FileStreamResult"..
+
+12. what are the different types of results in MVC ?
+a. ViewResult
+b. Empty Result
+c. Redirect Result
+d. JavaScriptResult
+e. JsonResult
+f. ContentResult
+g. FileContentResult
+h. FileStreamResult
+i. FilePathResult
+
+13. What is a singleton pattern
+This is a design pattern - This pattern ensures that a class has only one instance and 
+provides a global point of access to it.
+
+14. What are the uses of delegates in C# ?
+Delegates allow methods to be passed as parameters. Delegates can be used to define callback
+methods.
+
+15. Why to use ?Nullable Coalescing Operator? (??) in C# ?
+Nullable Coalescing Operator can be used with reference types and nullable value types. So if 
+the first operand of the expression is null then the value of second operand is assigned to 
+the variable.
+
+16. Explain the use of Virtual Keyword in C# ?
+The virtual keyword is used to modify a method, property, indexer, or event declared in the 
+base class and allow it to be overridden in the derived class. The override keyword is used to
+extend or modify a virtual/abstract method, property, indexer, or event of base class into 
+derived class.
+
+17. What is overriding in c# ?
+Method overriding is a feature that allows you to invoke functions(that have the same 
+signatures) that belong to different classes in the same hierarchy of inheritance using the 
+base class reference.
+
+18. What is Method Hiding in C# ?
+ Method hiding is also known as shadowing. The method of the parent class is available to the
+ child class without using the override keyword in shadowing.
+
+19. What is a Generic Class and How to use ?
+
+
+20. What are Async and Await ?
+
+
+Boeing India Pvt. Ltd
+
+1. Polymorphism 
+
+public method main
+{
+public void methodA (int a, int b)
+{
+}
+public void methodA (int a)
+{
+}
+}
+
+public method main
+{
+}
+public virtual void methodA (int a, int b)
+{
+}
+public override void methodA (int a, int b)
+{
+}
+
+2. Difference between "var" and "dynamic" ?
+var a = 5;
+    a = "abc" ;
+o/p : can not implicitly convert string to int
+
+dynamic a = 6;
+        a = "abc" ;    
+o/p : no error
+
+which of the above is correct ?
+
+3. diff between Httphelper and HttpHandler ?
+
+4. which is correct ? among the following ?
+
+class A
+{
+    public void Display() 
+    {
+    }
+}
+class B : A 
+{
+    public void Display() 
+    {
+    }
+}
+
+a = new A () ;
+b = new B () ;
+b = new A () ;
+
+5. second highest salary from emp ?
+
+6. male to female and female to male change in the table ?
+
+7. Inner join based on the common column(Id) ?
+
+8. how to put the code in Prod ?
+
+
+Overloading :
+=====================
+public class TestData  
+{  
+    public int Add(int a, int b, int c)  
+    {  
+        return a + b + c;  
+    }  
+    public int Add(int a, int b)  
+    {  
+        return a + b;  
+    }  
+}  
+class Program  
+{  
+    static void Main(string[] args)  
+    {  
+        TestData dataClass = new TestData();  
+        int add2 = dataClass.Add(45, 34, 67);  
+        int add1 = dataClass.Add(23, 34);  
+    }  
+}  
+
+
+Overriding :
+==============
+public class X  
+{  
+    public virtual void A()  
+    {  
+    }  
+}  
+public class Y : X  
+{  
+    public override void A()  
+    {  
+    }  
+}  
+
+Shadowing :
+==============
+public class X  
+{  
+    public virtual void A()  
+    {  
+    }  
+}  
+public class Y : X  
+{  
+    public new void A()  
+    {  
+    }  
+}  
+
+
+IIS Configuration ?
+
+========================================
+
+XL health care:
+1. Diff. bn singleton n factory ?
+Singleton design pattern is a design pattern that restricts the instantiation of a class to 
+one object. The Singleton pattern ensures that only one instance of the class exists and  
+provides a global point for accessing it.
+Purpose:
+The purpose of the singleton design pattern is where you want all calls to go through the 
+same instance. Singleton design pattern ensures that no matter how many times a client 
+(or multiple clients) ask for an instance of this specific Type to be created (instantiated) 
+for them, they will always get the exact same one and only one instance of the type. 
+It guarantees that only one instance of the type can ever be instantiated.
+The singleton pattern must be carefully constructed in multi-threaded applications. 
+If two threads are to execute the creation method at the same time when a singleton does not 
+yet exist, they both must check for an instance of the singleton and then only one should 
+create the new one. 
+
+2. Diff. bn Asyncronus and syncronus ?
+* Synchronization means two or more operations are running in a same context (thread) so that 
+one may block another.
+* Synchronization means two or more operations happen sequentially.
+* Asynchronous means two or more operations are running in different contexts (thread) so that
+ they can run concurrently and do not block each other.
+* Asynchronous means two or more operations happen asynchronously.
+
+3. Diff. bn IEnumerable(System.Collections is namespace) and IQueriable(System.Linq is namespace) ?
+IEnumerable : Fetch the all records and filter it in the Client application.
+IQueryable : Filter the records in database and get the filtered records to the client 
+application.
+
+4. Diff. bn var n dynamic ?
+5. Diff. bn static and readonly ?
+Const :  
+* Need to initialise while declaring.
+* By default a const is static and we cannot change the value of a const variable throughout the entire program.
+
+Readonly : 
+* Readonly is the keyword whose value we can change during runtime or we can assign it at run time but only through the non-static constructor. Not even a method.
+* you can only assign a value either through a variable or a constructor. 
+public class Variables
+{
+readonly string Re;
+public Variables()  // Constructor
+{
+ Re = "Trying to assign a Readonly variable";
+Console.WriteLine(Re);
+}
+
+static void Main (string[] args)
+{
+  Variables var = new Variables();
+  Console.RadKey();
+}
+} 
+
+Static ReadOnly :
+* A Static Readonly type variable's value can be assigned at runtime or assigned at compile 
+time and changed at runtime. 
+* But this variable's value can only be changed in the static constructor. And cannot be 
+changed further. It can change only once at runtime.
+
+6. CLR, CTS, Garbage collector ?
+7. Finalize, Dispose ? using IDisposable interface we can handle the unmanaged sources
+8. Diff. bn Action Result and View Result ?
+9. MVC life cycle ?
+10. maprouteURL method is used to map the routes.
+routes.MapRoute(
+                name: Constants.Routing.AdminRouteName,
+                url: "{city}/pems/{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "Duncan.PEMS.Web.Areas.admin.Controllers" },
+                constraints: new {city="Admin"}
+            );
+11. Overload n override diff. ?
+12. Exceptions how to handle  ? using IExceptionFilter interface
+13. Diff. bn Delete and Truncate ?
+14. Diff. bn Drop and Truncate ?
+15. ISerializable in mvc c# ?
+
+=============================================================================================
+
+TCS :
+1. Apllication life cycle events ? .net and MVC ?
+2. How many web.config files are there ? without web.config file will the application work ?
+3. How to pass the information from controller to view ?  (ViewBag, ViewData)
+4. what is RouteConfigs file in mvc ?
+5. function and sp diff ?
+
+6. If solution files are there, i want to access the .html file from first solution file to 
+another solution file ? Is it possible, how ?   (By using AJAX call)
+
+7. which protocol used to transfer the information ? (HTTP)
+
+8. what is Enum ?
+The enum is used to declare a list of named integer constants. It can be defined using the 
+enum keyword directly inside a namespace, class, or structure.
+
+
+Primera
+-----------
+
+1. Union in sql ?
+
+2. Rank in sql ?
+
+3. How to remove duplicates ?
+
+4. Multiple document.ready functions can we write ?
+
+5. what is model ?
+
+6. what is .each() ?
+ $(".filesPP").each(function () {
+   eval($(this).children("script").last().html());
+ });
+
+ _selectItems: function (listItems) {
+ var that = this;
+
+ $.each(listItems, function (i, item) {
+   var idx = ui.List.inArray(item, that.ul[0]);
+   that.select(idx);  // select OR unselect
+});
+
+7. what are selectors ? how to define ?
+
+8. what is routing ?
+
+9. Life cycle of mvc ?
+
+10. Diff. bn entity framework and ado.net ?
+
+11. Caching in .net ?
+
+12. what is EntityFramework ?
+http://www.entityframeworktutorial.net/what-is-entityframework.aspx
+
+13. Diff. bn Local Storage and Session Storage ?
+Session storage is destroyed once the user closes the browser whereas, Local storage stores 
+data with no expiration date. 
+LocalStorage: The data is not sent back to the server for every HTTP request (HTML, images, 
+JavaScript, CSS, etc) - reducing the amount of traffic between client and server.
+
+<script>  
+  sessionStorage.setItem("sessionData", "I am set in session storage.");  
+  localStorage.setItem("localData", "I am set in local storage.");  
+  document.cookie = "Available on both client and server side";  
+</script> 
+
+14. Usage of Global.asax file in c# ?
+
+
+15. Cascading delete in SQL ?
+A foreign key with cascade delete means that if a record in the parent table is deleted, 
+then the corresponding records in the child table will automatically be deleted. 
+This is called a cascade delete in SQL Server.
+
+Ex:  ALTER TABLE dbo.T2
+     DROP CONSTRAINT FK_T1_T2   -- or whatever it's called
+
+ALTER TABLE dbo.T2
+   ADD CONSTRAINT FK_T1_T2_Cascade
+   FOREIGN KEY (EmployeeID) REFERENCES dbo.T1(EmployeeID) ON DELETE CASCADE
+
+
+HerbaLife
+----------
+
+1. <div>
+   <span></span> 
+   <span></span>
+   <span></span>
+  </div>
+I need to read the 3rd/Nth span tag by using jquery ? how ?
+
+2. MVC life cycle ?
+
+3. what are ViewData, ViewBag, TempData ?
+
+4. ViewData is used in View and ViewBag is used in within the partial view of same View page
+   or viceversa is it possible ? Yes
+
+5. TempData values all or specific values can pass to the another controller by using keep method
+   how ?  
+we can all or specific values to another controller is possible.
+
+6. obj a = new a();
+   obj b = new b();
+   obj a = new b(); // wrong
+   obj b = new a();
+which is wrong ? 
+
+7. 3rd highest salary from Emp table ?
+
+8. Each employee individual manager ? from the same table ?
+   SELECT DISTINCT e.EmpId AS 'ManagerId', e.EmpName AS 'ManagerName'
+   FROM Employees e, Employees m WHERE e.EmpId = m.ManagerId;
+
+9. How to validations in MVC ? client side and server side ?
+
+
+CapGemini
+-----------
+1. Diff. bn Primary key and unique key ?
+
+2. Diff. bn function and Stored procedure ?
+
+3. How to pass null values to sp in sql ?
+
+4. what is ViewModel ?
+
+5. what is map route url ? how to see the log files ?
+
+6. how to consume/write a layout page in .cshtml page ?
+
+7. Scaffloding in mvc ?
+
+============================================================================================
+8. how to insert a records into a table ?
+unique key, primary key ?
+select 1/2 ?
+select 1/4 ?
+
+
+9.C# Value types and Reference types ?
+Value types(Stack): bool, byte, char, decimal, double, enum, float, int, long, sbyte, short, 
+struct, uint, ulong, ushort, DateTime
+
+Reference types(Heap): String, class, delegates, All arrays, even if their elements are value 
+types.
+Ex:  
+using System;
+public class Student
+{
+ public string StudentName { get; set; }	
+}
+
+public class Program
+{
+     public static void ChangeReferenceType(Student std2)
+	{
+	  std2.StudentName = "Steve";
+	}
+	
+     public static void Main()
+       {
+	 Student std1 = new Student();
+	 std1.StudentName = "Bill";
+	 ChangeReferenceType(std1);
+	 Console.WriteLine(std1.StudentName);
+       }
+}
+
+10. Diff. bn ASP.NET and MVC
+
+Asp.Net Web Form follow a traditional event-driven development model.	
+Asp.Net MVC is a lightweight and follows MVC (Model, View, Controller) pattern based 
+development, model.
+Asp.Net Web Form has server controls.	
+Asp.Net MVC has HTML helpers.
+Asp.Net Web Form supports view state for state management at the client side.	
+Asp.Net MVC does not support view state.
+Asp.Net Web Form has file-based URLs means file name exist in the URLs must have its physical 
+existence.	
+Asp.Net MVC has route-based URLs means URLs are divided into controllers and actions and 
+moreover it is based on controller not on physical file.
+Asp.Net Web Form follows Web Forms Syntax	
+Asp.Net MVC follow customizable syntax (Razor as default)
+In Asp.Net Web Form, Web Forms(ASPX) i.e. views are tightly coupled to Code behind(ASPX.CS) 
+i.e. logic.	
+In Asp.Net MVC, Views and logic are kept separately.
+Asp.Net Web Form has Master Pages for a consistent look and feels.	
+Asp.Net MVC has Layouts for a consistent look and feels.
+Asp.Net Web Form has User Controls for code re-usability.	
+Asp.Net MVC has Partial Views for code re-usability.
+Asp.Net Web Form has built-in data controls and best for rapid development with powerful data 
+access.	Asp.Net MVC is lightweight, provide full control over markup and support many features
+that allow fast & agile development. 
+Hence it is best for developing an interactive web application with the latest web standards.
+Asp.Net Web Form is not Open Source.	
+Asp.Net Web MVC is an Open Source.
+
+
+Scope resolution Operator
+The scope resolution operator is ":".
+Ex: 
+ enfvendorName = (at.enfvendorName == null) ? string.Empty : at.enfvendorName,
+
+Null-Collation Operator:
+The null-collation operator is "??"
+The ?? operator is called the null-coalescing operator and is used to define a default value for 
+nullable value types or reference types. It returns the left-hand operand if the operand is not 
+null; otherwise, it returns the right operand. The C# Null Coalescing Operator (??)  is a binary 
+operator that simplifies checking for null values. It is used to assign a default value to a 
+variable when the value is null.
+
+
+JSON.stringify() :
+The JSON.stringify() method converts JavaScript objects into strings. When sending data to a web 
+server the data has to be a string.
+
+
+===============================================================================================
+
+Genpact:
+
+1. Authentication in MVC, how to do ? types ?
+
+2. Session in Asp.net ? types ?
+3. Conostructors in c# and types ?
+4. Indexes in SQL ?
+5. MVC life cycle ?
+6. How can we handle exceptions in MVC ? filter class and interface for Exceptions ?
+7. what is JSON ?
+8. what is Static class and use ?
+9. what is Caching and types ? where it will store the cache memory ?
+
+C2D Hyd:
+
+1. Sql server session how to maintain if connection lost ?
+2. OpenId authentication in MVC ?
+3. Multithreading in MVC ?
+4. factory pattern advantages ?
+5. Asp.net state management techniques ?
+
+
+
+
